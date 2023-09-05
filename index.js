@@ -1,0 +1,24 @@
+const express=require("express");
+const cors=require("cors");
+const connection = require("./db");
+const userRouter = require("./routes/user.route");
+const courseRouter = require("./routes/courses.route");
+
+require("dotenv").config();
+
+const app=express();
+app.use(cors())
+app.use(express.json());
+
+app.use("/user",userRouter)
+app.use("/course",courseRouter)
+
+app.listen(process.env.port,async()=>{
+ try {
+   await connection
+   console.log("DB is connected")
+   console.log(`Server is running at ${process.env.port}`)
+ } catch (error) {
+    console.log(error)
+ }
+})
